@@ -4,10 +4,13 @@ const TodosController = {
   //  GET
   getTodos: async (req, res) => {
     try {
-      const { projectID } = req.body;
-      const { title, sortDirection } = req.query;
+      const { title, sortDirection, projectID } = req.query;
       const sort = { title: sortDirection === "asc" ? 1 : -1 };
       const filter = { projectID };
+
+      if(!projectID) return res.status(400).json({
+        message: "projectID is required"
+      });
 
       if (title) {
         filter.title = { $regex: title, $options: "i" };
