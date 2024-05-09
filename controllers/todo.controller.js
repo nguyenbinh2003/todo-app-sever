@@ -4,9 +4,10 @@ const TodosController = {
   //  GET
   getTodos: async (req, res) => {
     try {
+      const { projectID } = req.body;
       const { title, sortDirection } = req.query;
       const sort = { title: sortDirection === "asc" ? 1 : -1 };
-      const filter = {};
+      const filter = { projectID };
 
       if (title) {
         filter.title = { $regex: title, $options: "i" };
@@ -15,7 +16,7 @@ const TodosController = {
 
       return res.json(todos);
     } catch (error) {
-        console.log(error);
+      console.log(error);
       return res.status(404).json(error);
     }
   },
