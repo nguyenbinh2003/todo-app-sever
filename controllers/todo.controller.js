@@ -6,7 +6,7 @@ const TodosController = {
     try {
       const { title, sortDirection, projectID } = req.query;
       const sort = { title: sortDirection === "asc" ? 1 : -1 };
-      const filter = { projectID };
+      const filter = { _id: projectID };
 
       if(!projectID) return res.status(400).json({
         message: "projectID is required"
