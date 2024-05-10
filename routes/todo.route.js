@@ -5,6 +5,7 @@ const TodosController = require("../controllers/todo.controller");
 
 /* GET */
 router.get("/", TodosController.getTodos);
+router.get("/:idTodo", TodosController.getTodoById);
 
 //  POST
 router.post("/add", TodosController.createTodo);

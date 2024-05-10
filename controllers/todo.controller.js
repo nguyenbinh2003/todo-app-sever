@@ -25,6 +25,18 @@ const TodosController = {
     }
   },
 
+  getTodoById: async (req, res) => {
+    const { idTodo } = req.params;
+    
+    if (!idTodo)
+      return res.status(400).json({
+        message: "idTodo not found",
+      });
+
+    const todo = await Todo.findById(idTodo);
+
+    return res.json(todo);
+  },
   //  POST
   createTodo: async (req, res) => {
     try {
