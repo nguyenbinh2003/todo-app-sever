@@ -16,7 +16,6 @@ const TodosController = {
       if (title) {
         filter.title = { $regex: title, $options: "i" };
       }
-      console.log(filter);
       const todos = await Todo.find(filter).sort(sort).exec();
 
       return res.json(todos);
