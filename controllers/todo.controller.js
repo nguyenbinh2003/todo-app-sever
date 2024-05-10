@@ -8,14 +8,16 @@ const TodosController = {
       const sort = { title: sortDirection === "asc" ? 1 : -1 };
       const filter = { projectID };
 
-      if(!projectID) return res.status(400).json({
-        message: "projectID is required"
-      });
+      if (!projectID)
+        return res.status(400).json({
+          message: "projectID is required",
+        });
 
       if (title) {
         filter.title = { $regex: title, $options: "i" };
       }
-      const todos = Todo.find(filter).sort(sort).exec();
+      console.log(filter);
+      const todos = await Todo.find(filter).sort(sort).exec();
 
       return res.json(todos);
     } catch (error) {
