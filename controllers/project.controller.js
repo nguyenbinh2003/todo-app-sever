@@ -50,7 +50,6 @@ const ProjectsController = {
       const newProject = new Project({
         title,
         description,
-        todos: [],
       });
 
       await newProject.save();

@@ -4,7 +4,6 @@ const projectSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     description: { type: String },
-    todos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Todos" }],
   },
   { timestamps: true },
   { collection: "Projects" }
