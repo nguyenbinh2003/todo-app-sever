@@ -6,7 +6,7 @@ const TodosController = {
     try {
       const { title, sortDirection, projectID } = req.query;
       const sort = { title: sortDirection === "asc" ? 1 : -1 };
-      const filter = { _id: projectID };
+      const filter = { projectID };
 
       if(!projectID) return res.status(400).json({
         message: "projectID is required"
@@ -15,7 +15,7 @@ const TodosController = {
       if (title) {
         filter.title = { $regex: title, $options: "i" };
       }
-      const todos = Todo.find(filter).sort(sort).exec();
+      const todos = await Todo.find(filter).sort(sort).exec();
 
       return res.json(todos);
     } catch (error) {
