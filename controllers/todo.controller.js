@@ -5,7 +5,7 @@ const TodosController = {
   getTodos: async (req, res) => {
     try {
       const { title, sortDirection, projectID } = req.query;
-      const sort = { title: sortDirection === "asc" ? 1 : -1 };
+      const sort = { updatedAt: sortDirection === "asc" ? 1 : -1 };
       const filter = { projectID };
 
       if (!projectID)
