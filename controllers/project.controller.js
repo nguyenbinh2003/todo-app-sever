@@ -66,48 +66,58 @@ const ProjectsController = {
 
   //    PATCH
   editProject: async (req, res) => {
-    const { idProject } = req.params;
-    const { title, description } = req.body;
-
-    if (!idProject)
-      return res.status(400).json({
-        message: "id not found",
-      });
-
-    const project = await Project.findById(idProject);
-
-    if (!project)
-      return res.status(400).json({
-        message: "id not found",
-      });
-
-    if (title && description) {
-      project.title = title;
-      project.description = description;
-    } else if (title) {
-      project.title = title;
-    } else if (description) {
-      project.description = description;
+    try {
+      const { idProject } = req.params;
+      const { title, description } = req.body;
+  
+      if (!idProject)
+        return res.status(400).json({
+          message: "id not found",
+        });
+  
+      const project = await Project.findById(idProject);
+  
+      if (!project)
+        return res.status(400).json({
+          message: "id not found",
+        });
+  
+      if (title && description) {
+        project.title = title;
+        project.description = description;
+      } else if (title) {
+        project.title = title;
+      } else if (description) {
+        project.description = description;
+      }
+      await project.save();
+      return res.json({ message: "success" });
+    } catch (error){
+      console.log(error);
+      return res.status(404).json(error);
     }
-    await project.save();
-    return res.json({ message: "success" });
   },
 
   //   DELETE
   deleteProject: async (req, res) => {
-    const { idProject } = req.params;
-
-    if (!idProject)
-      return res.status(400).json({
-        message: "id not found",
+    try {
+      const { idProject } = req.params;
+  
+      if (!idProject)
+        return res.status(400).json({
+          message: "id not found",
+        });
+  
+      const project = await Project.findByIdAndDelete(idProject);
+      if (!project) return res.status(404).json({ message: "not found" });
+  
+      return res.json({
+        message: "success",
       });
-
-    const project = await Project.findByIdAndDelete(idProject);
-    if (!project) return res.status(404).json({ message: "not found" });
-
-    return res.json({
-      message: "success",
-    });
+    } catch(error){
+      console.log(error);
+      return res.status(404).json(error);
+    }
   },
 };
 
