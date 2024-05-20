@@ -37,7 +37,7 @@ const TodosController = {
       const todo = await Todo.findById(idTodo);
 
       if (!todo)
-        return res.status(400).json({
+        return res.status(404).json({
           message: "not found",
         });
   
