@@ -26,16 +26,21 @@ const TodosController = {
   },
 
   getTodoById: async (req, res) => {
-    const { idTodo } = req.params;
-    
-    if (!idTodo)
-      return res.status(400).json({
-        message: "idTodo not found",
-      });
-
-    const todo = await Todo.findById(idTodo);
-
-    return res.json(todo);
+    try {
+      const { idTodo } = req.params;
+      
+      if (!idTodo)
+        return res.status(400).json({
+          message: "idTodo not found",
+        });
+  
+      const todo = await Todo.findById(idTodo);
+  
+      return res.json(todo);
+    } catch(error){
+      console.log(error);
+      return res.status(404).json(error);
+    }
   },
   //  POST
   createTodo: async (req, res) => {
@@ -96,13 +101,18 @@ const TodosController = {
 
   //  DELETE
   deleteTodo: async (req, res) => {
-    const { todoID } = req.params;
-    if (!todoID) return res.status(400).json({ message: "todoID is required" });
-
-    const todo = await Todo.findByIdAndDelete(todoID);
-    if (!todo) return res.status(400).json({ message: "not found" });
-
-    return res.json({ message: "success" });
+    try {
+      const { todoID } = req.params;
+      if (!todoID) return res.status(400).json({ message: "todoID is required" });
+  
+      const todo = await Todo.findByIdAndDelete(todoID);
+      if (!todo) return res.status(400).json({ message: "not found" });
+  
+      return res.json({ message: "success" });
+    } catch (error){
+      console.log(error);
+      return res.status(404).json(error);
+    }
   },
 };
 
